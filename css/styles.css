@@ -10,6 +10,9 @@
   --color-white: #FFFFFF;
   --color-secondary: #84DCC6;
   --color-blue: #0089D0;
+  /* Variante más oscura del azul de marca, solo para texto de enlaces:
+     #0089D0 da 3.83:1 sobre blanco (no cumple WCAG AA 4.5:1 para texto). */
+  --color-blue-text: #006999;
 
   /* Derivados de la paleta (mismos matices, distinta opacidad/luminosidad) */
   --color-primary-dark: #003820;
@@ -67,7 +70,7 @@ h1 { font-size: clamp(2.25rem, 1.7rem + 2.4vw, 3.6rem); font-weight: 600; }
 h2 { font-size: clamp(1.7rem, 1.4rem + 1.3vw, 2.5rem); }
 h3 { font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.4rem); }
 p { margin: 0 0 var(--space-4); max-width: 65ch; }
-a { color: var(--color-blue); }
+a { color: var(--color-blue-text); }
 ul, ol { padding-left: 1.2em; }
 button { font: inherit; }
 
@@ -147,10 +150,18 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 /* ---------- Header ---------- */
 .site-header {
   position: sticky; top: 0; z-index: 500;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: saturate(160%) blur(8px);
   border-bottom: 1px solid var(--color-border-subtle);
   height: var(--header-height);
+}
+/* The frosted-glass backdrop lives on a ::before layer rather than on
+   .site-header itself: backdrop-filter (like transform/filter/will-change)
+   makes an element the containing block for its position:fixed
+   descendants, which would trap the fixed-position mobile nav panel
+   inside the header's own 76px-tall box instead of the full viewport. */
+.site-header::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(160%) blur(8px);
 }
 .site-header .container { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); }
 .brand { display: flex; align-items: center; gap: var(--space-3); text-decoration: none; color: var(--color-primary); }
@@ -201,19 +212,26 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .nav-toggle[aria-expanded="true"] .icon-menu { display: none; }
 .nav-toggle[aria-expanded="true"] .icon-close { display: block; }
 
-/* ---------- Hero ---------- */
-.hero {
-  display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center;
-  gap: var(--space-8); padding-block: var(--space-8);
+/* ---------- Hero (imagen completa, home) ---------- */
+.hero-full {
+  position: relative;
+  min-height: clamp(560px, 84vh, 780px);
+  display: flex; align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
 }
-.hero-copy .eyebrow { margin-bottom: var(--space-4); }
-.hero-figure { position: relative; border-radius: var(--radius-md); overflow: hidden; }
-.hero-figure img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 5; }
-.hero-figure figcaption {
-  position: absolute; left: 0; right: 0; bottom: 0; padding: var(--space-4) var(--space-5);
-  background: linear-gradient(0deg, rgba(0,0,0,0.55), transparent);
-  color: var(--color-white); font-size: 0.85rem;
+.hero-full-media { position: absolute; inset: 0; z-index: -1; }
+.hero-full-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 32%; }
+.hero-full-media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(4, 16, 10, 0.18) 0%, rgba(4, 16, 10, 0.58) 60%, rgba(4, 16, 10, 0.86) 100%);
 }
+.hero-full-content { padding-block: var(--space-7) var(--space-9); }
+.hero-full-content .eyebrow { color: var(--color-secondary); text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35); }
+.hero-full-content .eyebrow::before { background: var(--color-accent); }
+.hero-full-content h1 { color: var(--color-white); text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4); }
+.hero-full-content .lede { color: rgba(255, 255, 255, 0.92); max-width: 62ch; text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4); }
+
 .page-hero {
   padding-block: var(--space-8) var(--space-7);
   border-bottom: 1px solid var(--color-border-subtle);
@@ -222,8 +240,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .page-hero .eyebrow::before { background: var(--color-blue); }
 
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; gap: var(--space-6); padding-block: var(--space-6); }
-  .hero-figure img { aspect-ratio: 4 / 3; }
+  .hero-full { min-height: clamp(520px, 92vh, 680px); align-items: flex-end; }
+  .hero-full-content { padding-block: var(--space-6) var(--space-7); }
 }
 
 /* ---------- Stat strip ---------- */
@@ -271,7 +289,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 
 /* ---------- Product cards ---------- */
 .product-card { background: var(--color-surface); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); overflow: hidden; }
-.product-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+/* height:auto is required here: every <img> also carries HTML width/height
+   attributes (to prevent layout shift), and the browser maps those to an
+   implicit height in px. Without an explicit height:auto, that mapped
+   height wins over aspect-ratio's auto-calculation, ignoring the ratio. */
+.product-card img { width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; }
 .product-card .product-body { padding: var(--space-5); }
 .product-card h3 { margin-bottom: var(--space-2); }
 .product-card p { color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: var(--space-3); }
@@ -322,7 +344,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .recognition-item button.thumb-btn {
   border: none; padding: 0; background: none; cursor: zoom-in; display: block; width: 100%;
 }
-.recognition-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.recognition-item img { width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; }
 .recognition-caption { padding: var(--space-4); }
 .recognition-caption .rec-title { font-weight: 600; color: var(--color-primary); display: block; margin-bottom: 2px; font-size: 0.95rem; }
 .recognition-caption .rec-meta { font-size: 0.82rem; color: var(--color-text-muted); }
@@ -349,7 +371,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .gallery-grid { grid-template-columns: 1fr; } }
 .gallery-item { border: none; padding: 0; background: none; cursor: zoom-in; border-radius: var(--radius-md); overflow: hidden; position: relative; }
-.gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; transition: transform 300ms var(--ease); }
+.gallery-item img { width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; transition: transform 300ms var(--ease); }
 .gallery-item:hover img { transform: scale(1.035); }
 .gallery-item .gallery-cap {
   position: absolute; left: 0; right: 0; bottom: 0; padding: var(--space-3) var(--space-4);

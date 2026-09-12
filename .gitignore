@@ -26,3 +26,7 @@ node_modules/
 
 # Logs
 *.log
+
+# Capturas/salidas sueltas generadas por los scripts de verificación en scripts/
+scripts/*.png
+scripts/screenshots/
