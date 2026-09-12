@@ -1,0 +1,28 @@
+# Materiales originales y documentos internos (no publicar)
+# Incluye el Plan Estratégico Institucional, fotografías sin optimizar,
+# certificados en resolución original y cualquier archivo con datos
+# personales (firmas, DNI, nombres de directivos/socios individuales).
+COOP.APPROCAP/
+
+# Repositorio de terceros (skill de diseño), no forma parte del sitio APPROCAP
+claude-design-skill-main/
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.tmp
+*.bak
+
+# Dependencias (por si en el futuro se añade tooling con npm)
+node_modules/
+
+# Credenciales / configuración local
+.env
+.env.*
+*.pem
+*.key
+
+# Logs
+*.log
