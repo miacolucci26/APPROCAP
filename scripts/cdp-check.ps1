@@ -8,7 +8,9 @@ param(
   [string]$ClickSelector = "",
   [string]$EvalAfter = "",
   [string]$PressKeyAfter = "",
-  [string]$RealClickSelector = ""
+  [string]$RealClickSelector = "",
+  [int]$SleepBeforeEvalAfterMs = 0,
+  [int]$ScrollToY = -1
 )
 
 $port = Get-Random -Minimum 9300 -Maximum 9700
@@ -190,6 +192,12 @@ try {
     Send-CDP "Input.dispatchKeyEvent" @{ type="keyUp"; code=$k.code; key=$k.key; windowsVirtualKeyCode=$k.windowsVirtualKeyCode } | Out-Null
     Start-Sleep -Milliseconds 500
   }
+
+  if ($ScrollToY -ge 0) {
+    Eval-JS "window.scrollTo({top:$ScrollToY,left:0,behavior:'instant'})" | Out-Null
+  }
+
+  if ($SleepBeforeEvalAfterMs -gt 0) { Start-Sleep -Milliseconds $SleepBeforeEvalAfterMs }
 
   if ($EvalAfter -ne "") {
     $evalId2 = Send-CDP "Runtime.evaluate" @{ expression = $EvalAfter; returnByValue = $true }

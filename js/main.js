@@ -6,6 +6,40 @@
     el.textContent = new Date().getFullYear();
   });
 
+  /* ---------------- Cifras animadas (franja de estadísticas) ---------------- */
+  var countEls = document.querySelectorAll("[data-count-to]");
+  if (countEls.length) {
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var animateCount = function (el) {
+      var target = parseInt(el.getAttribute("data-count-to"), 10) || 0;
+      var suffix = el.getAttribute("data-suffix") || "";
+      if (reduceMotion) {
+        el.textContent = target + suffix;
+        return;
+      }
+      var duration = 1200;
+      var start = null;
+      var easeOutQuad = function (t) { return 1 - (1 - t) * (1 - t); };
+      var step = function (timestamp) {
+        if (start === null) start = timestamp;
+        var progress = Math.min((timestamp - start) / duration, 1);
+        var current = Math.round(target * easeOutQuad(progress));
+        el.textContent = current + suffix;
+        if (progress < 1) window.requestAnimationFrame(step);
+      };
+      window.requestAnimationFrame(step);
+    };
+    var countObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    countEls.forEach(function (el) { countObserver.observe(el); });
+  }
+
   /* ---------------- Header transparente sobre el hero (solo Inicio) ---------------- */
   var transparentHeader = document.querySelector(".site-header[data-transparent-hero]");
   if (transparentHeader) {
