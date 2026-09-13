@@ -17,18 +17,18 @@ $srcBuffer = New-Object byte[] $bytes
 [System.Runtime.InteropServices.Marshal]::Copy($srcData.Scan0, $srcBuffer, 0, $bytes)
 $outBuffer = New-Object byte[] $bytes
 
-$whiteThreshold = 250
 for ($i = 0; $i -lt $bytes; $i += 4) {
     $b = $srcBuffer[$i]
     $g = $srcBuffer[$i + 1]
     $r = $srcBuffer[$i + 2]
-    if ($b -ge $whiteThreshold -and $g -ge $whiteThreshold -and $r -ge $whiteThreshold) {
-        # Background (white) -> fully transparent
-        $outBuffer[$i] = 255; $outBuffer[$i+1] = 255; $outBuffer[$i+2] = 255; $outBuffer[$i+3] = 0
-    } else {
-        # Logo shape -> solid white silhouette
-        $outBuffer[$i] = 255; $outBuffer[$i+1] = 255; $outBuffer[$i+2] = 255; $outBuffer[$i+3] = 255
-    }
+    $luminance = 0.299 * $r + 0.587 * $g + 0.114 * $b
+    $alpha = 255 - $luminance
+    if ($alpha -lt 0) { $alpha = 0 }
+    # Lift the curve so mid/bright brand colors (e.g. the yellow map) stay
+    # visibly opaque instead of nearly disappearing at pure luminance alpha.
+    $norm = $alpha / 255.0
+    $lifted = [math]::Pow($norm, 0.55) * 255.0
+    $outBuffer[$i] = 255; $outBuffer[$i+1] = 255; $outBuffer[$i+2] = 255; $outBuffer[$i+3] = [byte][math]::Round($lifted)
 }
 
 [System.Runtime.InteropServices.Marshal]::Copy($outBuffer, 0, $outData.Scan0, $bytes)

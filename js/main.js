@@ -99,6 +99,46 @@
     });
   }
 
+  /* ---------------- Menú con desplegables (El Origen / Impacto y Clima) ---------------- */
+  var dropdownItems = Array.prototype.slice.call(document.querySelectorAll(".nav-item--dropdown"));
+  if (dropdownItems.length) {
+    var closeDropdown = function (item) {
+      item.classList.remove("is-open");
+      item.querySelector(".nav-dropdown-trigger").setAttribute("aria-expanded", "false");
+    };
+    var closeAllDropdowns = function (except) {
+      dropdownItems.forEach(function (item) {
+        if (item !== except) closeDropdown(item);
+      });
+    };
+    dropdownItems.forEach(function (item) {
+      var trigger = item.querySelector(".nav-dropdown-trigger");
+      trigger.addEventListener("click", function () {
+        var willOpen = !item.classList.contains("is-open");
+        closeAllDropdowns();
+        if (willOpen) {
+          item.classList.add("is-open");
+          trigger.setAttribute("aria-expanded", "true");
+        }
+      });
+      item.querySelectorAll(".nav-dropdown-link").forEach(function (link) {
+        link.addEventListener("click", function () { closeDropdown(item); });
+      });
+    });
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".nav-item--dropdown")) closeAllDropdowns();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        var openItem = dropdownItems.filter(function (item) { return item.classList.contains("is-open"); })[0];
+        if (openItem) {
+          closeDropdown(openItem);
+          openItem.querySelector(".nav-dropdown-trigger").focus();
+        }
+      }
+    });
+  }
+
   /* ---------------- Lightbox (galería y reconocimientos) ---------------- */
   var lightbox = document.getElementById("lightbox");
   if (!lightbox) return;

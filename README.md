@@ -8,27 +8,42 @@ HTML, CSS y JavaScript estáticos, sin frameworks ni build step.
 ## Estructura
 
 ```
-index.html        Inicio
-nosotros.html      Nosotros (misión, visión, reconocimientos)
-productos.html      Productos (cacao en grano y línea INTENSSO)
-trabajo.html        Nuestro trabajo (cultivo → comercialización)
-compromiso.html      Compromiso (prácticas actuales y objetivos 2023-2027)
-galeria.html        Galería fotográfica
+index.html        Inicio (hero de imagen completa, cifras animadas)
+nosotros.html      El Origen (215 ha, cacao blanco y criollo, pisos ecológicos,
+                    misión/visión, gobernanza, reconocimientos)
+productos.html      Productos (cacao en grano, proceso, línea INTENSSO)
+compromiso.html      Impacto y Clima (agricultura orgánica, resiliencia
+                    climática, equidad e inclusión, objetivos 2023-2027)
 contacto.html        Contacto
 
 css/styles.css     Estilos (variables de marca, componentes, responsive)
-js/main.js         Menú móvil y visor de imágenes (lightbox), sin dependencias
+js/main.js         Menú móvil, desplegables de navegación, cifras animadas,
+                    header transparente y visor de imágenes (lightbox);
+                    sin dependencias externas
 
 assets/img/        Fotografías e imágenes optimizadas usadas por el sitio
 assets/img/reconocimientos/  Certificados de premios y reconocimientos
+assets/img/logo-approcap-white.png  Versión monocromática del logo, para el
+                    header transparente de Inicio
 
-scripts/resize-images.ps1   Script (PowerShell) usado para generar las copias
-                             optimizadas en assets/img/ a partir de los
-                             originales en COOP.APPROCAP/
+scripts/resize-images.ps1    Genera las copias optimizadas en assets/img/ a
+                              partir de los originales en COOP.APPROCAP/
+scripts/make-white-logo.ps1  Genera la versión monocromática del logo
+scripts/cdp-check.ps1        Herramienta de verificación: abre el sitio en
+                              Chrome headless (vía CDP) para revisar overflow,
+                              errores de consola e interacciones reales
+scripts/contrast-check.ps1   Calcula el contraste WCAG de los pares de color
 
 PENDIENTES.md       Información no publicada por falta de verificación,
                      y decisiones sobre datos personales
 ```
+
+La navegación principal usa menús desplegables: **El Origen** (215 hectáreas, cacao
+blanco y criollo, variedades por piso ecológico), **Impacto y Clima** (agricultura
+orgánica, resiliencia climática, equidad e inclusión), además de enlaces directos a
+**INTENSSO** y **Gobernanza**. Las páginas `galeria.html` y `trabajo.html` de la
+primera versión ya no existen: su contenido se fusionó dentro de `productos.html`
+(proceso de trabajo) o se retiró (galería). Ver `PENDIENTES.md` para el detalle.
 
 La carpeta `COOP.APPROCAP/` contiene los materiales originales (Plan Estratégico
 Institucional, fotografías sin optimizar, certificados en resolución completa).

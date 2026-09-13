@@ -167,6 +167,13 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .site-header .container { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); }
 .brand { display: flex; align-items: center; gap: var(--space-3); text-decoration: none; color: var(--color-primary); }
 .brand img { height: 44px; width: auto; }
+/* Cruce suave entre el logo a color (header sólido) y el logo blanco
+   (header transparente sobre el hero): ambos ocupan el mismo lugar. */
+.brand { position: relative; }
+.brand-logo--white { position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 200ms var(--ease); }
+.brand-logo--color { transition: opacity 200ms var(--ease); }
+.site-header--transparent .brand-logo--color { opacity: 0; }
+.site-header--transparent .brand-logo--white { opacity: 1; }
 .brand-name { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; line-height: 1.1; }
 .brand-name small { display: block; font-family: var(--font-body); font-weight: 500; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text-muted); }
 
@@ -180,20 +187,49 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .nav-toggle .icon-close { display: none; }
 
 .main-nav { display: flex; }
-.main-nav ul { list-style: none; display: flex; gap: var(--space-6); margin: 0; padding: 0; }
-.main-nav a {
+.main-nav ul { list-style: none; display: flex; gap: var(--space-5); margin: 0; padding: 0; }
+.nav-item { position: relative; }
+.nav-link {
+  display: inline-flex; align-items: center; gap: 4px;
   color: var(--color-text); text-decoration: none; font-weight: 500; font-size: 0.95rem;
   padding-block: var(--space-2); position: relative;
+  background: none; border: none; font-family: inherit; cursor: pointer;
 }
-.main-nav a::after {
+.nav-link::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
   background: var(--color-accent); transform: scaleX(0); transform-origin: left;
   transition: transform 180ms var(--ease);
 }
-.main-nav a:hover::after, .main-nav a[aria-current="page"]::after { transform: scaleX(1); }
-.main-nav a[aria-current="page"] { color: var(--color-primary); font-weight: 600; }
+.nav-link:hover::after, .nav-link[aria-current="page"]::after, .nav-item--dropdown.is-open .nav-link::after { transform: scaleX(1); }
+.nav-link[aria-current="page"] { color: var(--color-primary); font-weight: 600; }
+.nav-chevron { width: 15px; height: 15px; transition: transform 180ms var(--ease); }
+.nav-item--dropdown.is-open .nav-chevron { transform: rotate(180deg); }
+
+/* Panel desplegable (escritorio: flotante bajo el disparador) */
+.nav-dropdown {
+  display: none;
+  background: var(--color-surface); border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-card);
+  padding: var(--space-2);
+  min-width: 260px;
+}
+.nav-item--dropdown.is-open .nav-dropdown { display: block; }
+.nav-dropdown-link {
+  display: block; padding: var(--space-3) var(--space-3);
+  color: var(--color-text); text-decoration: none; font-size: 0.92rem; font-weight: 500;
+  border-radius: var(--radius-sm);
+}
+.nav-dropdown-link:hover { background: var(--color-primary-tint); color: var(--color-primary); }
+
 .header-cta { display: flex; align-items: center; gap: var(--space-4); }
 .header-cta .btn { padding: 10px 18px; }
+
+@media (min-width: 861px) {
+  .nav-dropdown {
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    margin-top: var(--space-2); z-index: 10;
+  }
+}
 
 @media (max-width: 860px) {
   .main-nav {
@@ -205,8 +241,14 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   }
   .main-nav.is-open { opacity: 1; transform: translateY(0); visibility: visible; pointer-events: auto; }
   .main-nav ul { flex-direction: column; gap: var(--space-2); }
-  .main-nav a { display: block; font-size: 1.15rem; padding-block: var(--space-3); border-bottom: 1px solid var(--color-border-subtle); }
-  .main-nav a::after { display: none; }
+  .nav-link { display: flex; width: 100%; justify-content: space-between; font-size: 1.15rem; padding-block: var(--space-3); border-bottom: 1px solid var(--color-border-subtle); }
+  .nav-link::after { display: none; }
+  .nav-dropdown {
+    padding: 0 0 var(--space-2) var(--space-4); border: none; box-shadow: none; min-width: 0;
+  }
+  .nav-item--dropdown:not(.is-open) .nav-dropdown { display: none; }
+  .nav-item--dropdown.is-open .nav-dropdown { display: block; }
+  .nav-dropdown-link { padding-block: var(--space-2); font-size: 1rem; color: var(--color-text-muted); }
   .nav-toggle { display: inline-flex; }
   .header-cta { display: none; }
 }
@@ -247,20 +289,22 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .site-header--transparent::before { opacity: 0; }
 .site-header--transparent .brand-name { color: var(--color-white); }
 .site-header--transparent .brand-name small { color: rgba(255, 255, 255, 0.78); }
-.site-header--transparent .main-nav a { color: rgba(255, 255, 255, 0.92); }
-.site-header--transparent .main-nav a[aria-current="page"] { color: var(--color-white); }
-.site-header--transparent .main-nav a::after { background: var(--color-white); }
+.site-header--transparent .main-nav > ul > .nav-item > .nav-link { color: rgba(255, 255, 255, 0.92); }
+.site-header--transparent .main-nav > ul > .nav-item > .nav-link[aria-current="page"] { color: var(--color-white); }
+.site-header--transparent .main-nav > ul > .nav-item > .nav-link::after { background: var(--color-white); }
 .site-header--transparent .nav-toggle { border-color: rgba(255, 255, 255, 0.55); color: var(--color-white); }
-/* El panel móvil desplegado es opaco y blanco (ver .main-nav.is-open):
-   si el header sigue "transparente" cuando se abre, el texto debe volver
-   a ser oscuro para no perderse sobre ese fondo blanco. */
-.site-header--transparent .main-nav.is-open a { color: var(--color-text); }
-.site-header--transparent .main-nav.is-open a[aria-current="page"] { color: var(--color-primary); }
-.site-header--transparent .main-nav.is-open a::after { background: var(--color-accent); }
+/* El panel móvil desplegado, y cualquier panel de desplegable, son opacos
+   y blancos (ver .main-nav.is-open y .nav-dropdown): si el header sigue
+   "transparente" cuando se abren, el texto debe volver a ser oscuro para
+   no perderse sobre ese fondo blanco. */
+.site-header--transparent .main-nav.is-open > ul > .nav-item > .nav-link { color: var(--color-text); }
+.site-header--transparent .main-nav.is-open > ul > .nav-item > .nav-link[aria-current="page"] { color: var(--color-primary); }
+.site-header--transparent .main-nav.is-open > ul > .nav-item > .nav-link::after { background: var(--color-accent); }
+.site-header--transparent .nav-dropdown-link { color: var(--color-text); }
 .site-header--transparent .header-cta .btn-outline-dark { color: var(--color-white); border-color: rgba(255, 255, 255, 0.7); }
 .site-header--transparent .header-cta .btn-outline-dark:hover { background: rgba(255, 255, 255, 0.15); }
 .site-header::before,
-.brand-name, .brand-name small, .main-nav a, .nav-toggle, .header-cta .btn-outline-dark {
+.brand-name, .brand-name small, .nav-link, .nav-toggle, .header-cta .btn-outline-dark {
   transition: color 200ms var(--ease), border-color 200ms var(--ease), opacity 200ms var(--ease), background-color 200ms var(--ease);
 }
 

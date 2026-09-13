@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Compromiso — APPROCAP</title>
-<meta name="description" content="Prácticas actuales y objetivos del Plan Estratégico Institucional 2023-2027 de la Cooperativa Agraria APPROCAP: producción orgánica, fortalecimiento institucional y equidad de género.">
-<meta property="og:title" content="Compromiso — APPROCAP">
-<meta property="og:description" content="Prácticas documentadas y objetivos del Plan Estratégico Institucional 2023-2027 de la Cooperativa Agraria APPROCAP.">
+<title>Impacto y Clima — APPROCAP</title>
+<meta name="description" content="Agricultura orgánica, resiliencia climática y equidad e inclusión en la Cooperativa Agraria APPROCAP: prácticas actuales y objetivos del Plan Estratégico Institucional 2023-2027.">
+<meta property="og:title" content="Impacto y Clima — APPROCAP">
+<meta property="og:description" content="Agricultura orgánica, resiliencia climática y equidad e inclusión en la Cooperativa Agraria APPROCAP Ltda.">
 <meta property="og:image" content="assets/img/apertura-mazorca-cacao-blanco.jpg">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#004F2D">
@@ -32,13 +32,31 @@
     </button>
     <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
       <ul>
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="nosotros.html">Nosotros</a></li>
-        <li><a href="productos.html">Productos</a></li>
-        <li><a href="trabajo.html">Nuestro trabajo</a></li>
-        <li><a href="compromiso.html" aria-current="page">Compromiso</a></li>
-        <li><a href="galeria.html">Galería</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
+        <li class="nav-item nav-item--dropdown">
+          <button type="button" class="nav-link nav-dropdown-trigger" aria-expanded="false" aria-controls="dropdown-origen">
+            El Origen
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="nav-dropdown" id="dropdown-origen">
+            <a class="nav-dropdown-link" href="nosotros.html#hectareas">215 hectáreas de cacao</a>
+            <a class="nav-dropdown-link" href="nosotros.html#variedades">Cacao blanco y criollo</a>
+            <a class="nav-dropdown-link" href="nosotros.html#pisos-ecologicos">Variedades por piso ecológico</a>
+          </div>
+        </li>
+        <li class="nav-item nav-item--dropdown">
+          <button type="button" class="nav-link nav-dropdown-trigger" aria-expanded="false" aria-controls="dropdown-impacto" aria-current="page">
+            Impacto y Clima
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="nav-dropdown" id="dropdown-impacto">
+            <a class="nav-dropdown-link" href="compromiso.html#organica">Agricultura orgánica</a>
+            <a class="nav-dropdown-link" href="compromiso.html#clima">Resiliencia climática</a>
+            <a class="nav-dropdown-link" href="compromiso.html#equidad">Equidad e inclusión</a>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="productos.html#intensso">INTENSSO</a></li>
+        <li class="nav-item"><a class="nav-link" href="nosotros.html#gobernanza">Gobernanza</a></li>
+        <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
     <div class="header-cta">
@@ -51,46 +69,65 @@
 
   <section class="page-hero">
     <div class="container">
-      <p class="eyebrow">Compromiso</p>
-      <h1>Nuestro compromiso</h1>
-      <p class="lede">Prácticas que ya forman parte de nuestro trabajo diario, y los objetivos hacia los que avanzamos como cooperativa.</p>
+      <p class="eyebrow">Impacto y Clima</p>
+      <h1>Impacto y clima</h1>
+      <p class="lede">Prácticas que ya forman parte de nuestro trabajo diario, y los objetivos hacia los que avanzamos como cooperativa frente al cambio climático y la equidad de género.</p>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="organica">
+    <div class="container">
+      <div class="split">
+        <div class="split-copy">
+          <p class="eyebrow">Producción orgánica</p>
+          <h2>Agricultura orgánica</h2>
+          <p>La cooperativa cuenta con certificación orgánica, que respalda la venta de nuestra producción en el mercado nacional e internacional. Un equipo técnico especializado en producción y poscosecha acompaña a las familias asociadas en el manejo del cultivo, para sostener esa condición en el tiempo.</p>
+          <p>Esta certificación es también la base de nuestra participación en la Mesa Técnica de Cacao de Piura y en APPCACAO, el gremio nacional que agrupa a productores de cacao orgánico.</p>
+        </div>
+        <div class="split-media">
+          <img src="assets/img/apertura-mazorca-cacao-blanco.jpg" alt="Mazorca de cacao blanco recién abierta, mostrando los granos frescos cubiertos de mucílago" width="1200" height="1600" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" id="clima">
     <div class="container">
       <div class="section-head">
-        <p class="eyebrow">Hoy</p>
-        <h2>Prácticas que sostienen nuestro trabajo</h2>
+        <p class="eyebrow">El reto climático</p>
+        <h2>Resiliencia climática</h2>
+        <p class="lede">La cadena de cacao enfrenta hoy un reto regulatorio concreto: la normativa de la Unión Europea que exige demostrar que el cacao comercializado no proviene de zonas deforestadas.</p>
       </div>
-      <div class="card-grid card-grid--4">
+      <div class="card-grid" style="grid-template-columns:1fr 1fr;">
         <div class="card">
           <span class="icon-badge icon-badge--mint" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-2-7-6-7-11a7 7 0 0 1 14 0c0 5-3 9-7 11Z"/><path d="M12 21V10"/></svg>
           </span>
-          <h3>Producción orgánica</h3>
-          <p>La cooperativa cuenta con certificación orgánica, que respalda la venta de la producción en el mercado nacional e internacional.</p>
+          <h3>Trazabilidad frente a la deforestación</h3>
+          <p>Trabajamos para fortalecer la trazabilidad de nuestra producción de cara a esta exigencia europea, identificada en nuestro propio diagnóstico institucional como uno de los principales retos de la cadena de cacao para los próximos años.</p>
         </div>
         <div class="card">
           <span class="icon-badge icon-badge--blue" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-7h6v7"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg>
           </span>
-          <h3>Acompañamiento técnico</h3>
-          <p>Un equipo técnico especializado en producción y poscosecha acompaña a las familias asociadas en el manejo del cultivo.</p>
+          <h3>Adaptación y mitigación</h3>
+          <p>Nuestro Plan Estratégico Institucional 2023–2027 identifica la adaptación y mitigación al cambio climático como una línea de trabajo prioritaria para sostener la producción frente a eventos como la sequía.</p>
         </div>
-        <div class="card">
-          <span class="icon-badge" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          </span>
-          <h3>Incidencia sectorial</h3>
-          <p>Participamos en la Mesa Técnica de Cacao de Piura y en APPCACAO, gremio nacional que promueve el desarrollo de la cadena de cacao.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="equidad">
+    <div class="container">
+      <div class="split reverse">
+        <div class="split-copy">
+          <p class="eyebrow">Equidad de género</p>
+          <h2>Equidad e inclusión</h2>
+          <p>31 de nuestras 180 familias asociadas están encabezadas por mujeres. La equidad de género es uno de los cuatro ejes de nuestro Plan Estratégico Institucional, junto con el fortalecimiento técnico-productivo, la institucionalidad y la incidencia en políticas públicas.</p>
+          <p>Trabajamos también por relaciones inclusivas dentro de la organización, como parte de nuestra misión institucional, promoviendo la participación de las mujeres y los jóvenes asociados en la vida de la cooperativa.</p>
         </div>
-        <div class="card">
-          <span class="icon-badge icon-badge--accent" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M2 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M14.5 15c2.6.3 4.5 2.2 4.5 5"/></svg>
-          </span>
-          <h3>Rol de las mujeres</h3>
-          <p>31 de nuestras 180 familias asociadas están encabezadas por mujeres. La equidad de género es uno de los cuatro ejes de nuestro Plan Estratégico Institucional.</p>
+        <div class="split-media">
+          <img src="assets/img/hero-productora-cacao-approcap.jpg" alt="Productora asociada a APPROCAP sosteniendo una caja con mazorcas de cacao recién cosechadas" width="1800" height="923" loading="lazy">
         </div>
       </div>
     </div>
@@ -155,11 +192,11 @@
       <div>
         <h4>Navegación</h4>
         <ul>
-          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="nosotros.html">El Origen</a></li>
           <li><a href="productos.html">Productos</a></li>
-          <li><a href="trabajo.html">Nuestro trabajo</a></li>
-          <li><a href="compromiso.html">Compromiso</a></li>
-          <li><a href="galeria.html">Galería</a></li>
+          <li><a href="compromiso.html">Impacto y Clima</a></li>
+          <li><a href="nosotros.html#gobernanza">Gobernanza</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
         </ul>
       </div>
       <div>

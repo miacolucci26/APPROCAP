@@ -32,13 +32,31 @@
     </button>
     <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
       <ul>
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="nosotros.html">Nosotros</a></li>
-        <li><a href="productos.html" aria-current="page">Productos</a></li>
-        <li><a href="trabajo.html">Nuestro trabajo</a></li>
-        <li><a href="compromiso.html">Compromiso</a></li>
-        <li><a href="galeria.html">Galería</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
+        <li class="nav-item nav-item--dropdown">
+          <button type="button" class="nav-link nav-dropdown-trigger" aria-expanded="false" aria-controls="dropdown-origen">
+            El Origen
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="nav-dropdown" id="dropdown-origen">
+            <a class="nav-dropdown-link" href="nosotros.html#hectareas">215 hectáreas de cacao</a>
+            <a class="nav-dropdown-link" href="nosotros.html#variedades">Cacao blanco y criollo</a>
+            <a class="nav-dropdown-link" href="nosotros.html#pisos-ecologicos">Variedades por piso ecológico</a>
+          </div>
+        </li>
+        <li class="nav-item nav-item--dropdown">
+          <button type="button" class="nav-link nav-dropdown-trigger" aria-expanded="false" aria-controls="dropdown-impacto">
+            Impacto y Clima
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="nav-dropdown" id="dropdown-impacto">
+            <a class="nav-dropdown-link" href="compromiso.html#organica">Agricultura orgánica</a>
+            <a class="nav-dropdown-link" href="compromiso.html#clima">Resiliencia climática</a>
+            <a class="nav-dropdown-link" href="compromiso.html#equidad">Equidad e inclusión</a>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="productos.html#intensso" aria-current="page">INTENSSO</a></li>
+        <li class="nav-item"><a class="nav-link" href="nosotros.html#gobernanza">Gobernanza</a></li>
+        <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
     <div class="header-cta">
@@ -80,11 +98,58 @@
 
   <section class="section section--tint">
     <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Del cultivo a la comercialización</p>
+        <h2>Nuestro proceso</h2>
+      </div>
+      <ol class="step-list">
+        <li class="step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div>
+            <h3>Cultivo</h3>
+            <p>215 hectáreas de cacao criollo —la mitad de variedad blanca— cultivadas por 180 familias asociadas en 18 zonas de San Juan de Bigote, cada una con las características propias de su piso ecológico.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div>
+            <h3>Acopio</h3>
+            <p>El cacao cosechado por las familias asociadas se recibe en la infraestructura de acopio de la cooperativa, que atiende a bases productoras distribuidas en todo el territorio.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div>
+            <h3>Beneficio y poscosecha</h3>
+            <p>Nuestro equipo técnico especializado en producción y poscosecha acompaña el fermentado y secado del grano, etapas determinantes para la calidad final del cacao.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div>
+            <h3>Transformación</h3>
+            <p>Parte de la producción se transforma en los derivados de la marca INTENSSO: cacao en polvo, pasta pura de cacao, chocolate en barra y bombones.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div>
+            <h3>Comercialización</h3>
+            <p>Comercializamos cacao en grano y derivados en el mercado nacional e internacional, con experiencia exportadora y participación activa en la Mesa Técnica de Cacao de Piura y en APPCACAO.</p>
+          </div>
+        </li>
+      </ol>
+      <p style="margin-top:var(--space-6);">La cooperativa cuenta con infraestructura y equipamiento propios para el acopio, beneficio, transformación y comercialización del cacao, lo que permite mantener el proceso bajo el mismo techo institucional, desde el grano hasta el producto derivado.</p>
+    </div>
+  </section>
+
+  <section class="section" id="intensso">
+    <div class="container">
       <div class="split reverse">
         <div class="split-copy">
           <p class="eyebrow">Marca de derivados</p>
           <h2>Línea INTENSSO</h2>
-          <p>A partir del cacao de nuestros socios y socias elaboramos una línea de derivados bajo la marca INTENSSO, presente en ferias regionales, nacionales e internacionales.</p>
+          <p>A partir del cacao de nuestros socios y socias elaboramos una línea de derivados bajo la marca INTENSSO, presente en ferias regionales, nacionales e internacionales, y reconocida con el 3er puesto del Concurso Internacional de Chocolates Elaborados al Origen (AVPA), en París.</p>
           <p>La presentación y variedad exacta de cada producto puede variar según la temporada. Para conocer disponibilidad y presentaciones vigentes, contáctanos directamente.</p>
         </div>
         <div class="split-media">
@@ -94,7 +159,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--tint">
     <div class="container">
       <div class="card-grid card-grid--4">
         <article class="product-card">
@@ -158,11 +223,11 @@
       <div>
         <h4>Navegación</h4>
         <ul>
-          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="nosotros.html">El Origen</a></li>
           <li><a href="productos.html">Productos</a></li>
-          <li><a href="trabajo.html">Nuestro trabajo</a></li>
-          <li><a href="compromiso.html">Compromiso</a></li>
-          <li><a href="galeria.html">Galería</a></li>
+          <li><a href="compromiso.html">Impacto y Clima</a></li>
+          <li><a href="nosotros.html#gobernanza">Gobernanza</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
         </ul>
       </div>
       <div>

@@ -71,6 +71,37 @@ visitante: donde faltó un dato, simplemente se omitió esa sección o ese campo
   forma agregada y anónima en "Nosotros" ("distintos socios y socias... han obtenido
   primeros y terceros puestos individuales").
 
+## Rediseño de navegación y contenido (segunda etapa)
+
+- **Páginas eliminadas:** `galeria.html` y `trabajo.html` ya no existen, a pedido
+  explícito. El contenido de "Nuestro trabajo" (las 5 etapas del proceso) se conservó,
+  fusionado dentro de `productos.html`. El contenido de la galería fotográfica se perdió
+  al eliminar la página; si se quiere recuperar, las fotos originales siguen disponibles
+  en `assets/img/` y podrían reincorporarse en otra sección.
+- **"Resiliencia Climática" y deforestación:** se pidió incluir "cero deforestación"
+  como parte del compromiso de la cooperativa. No se publicó así: el propio Plan
+  Estratégico describe la normativa europea de deforestación como un **reto regulatorio
+  pendiente**, no como un estándar ya cumplido. La sección `compromiso.html#clima` lo
+  presenta como un trabajo de fortalecimiento de trazabilidad en curso, citando la
+  normativa real. **Si la cooperativa cuenta con una certificación o auditoría que
+  respalde una afirmación más fuerte, se puede ajustar el texto.**
+- **"Notas de cata por piso ecológico":** no se encontró ninguna nota de cata (floral,
+  frutal, cítrica, etc.) en los materiales disponibles. La sección
+  `nosotros.html#pisos-ecologicos` describe en cambio lo que sí está documentado: que
+  cada piso ecológico da variedades con características propias. **No se inventaron
+  notas de cata.**
+- **Gobernanza:** la nueva sección `nosotros.html#gobernanza` describe la Asamblea
+  General, el Consejo de Administración, el Consejo de Vigilancia y el Consejo de
+  Educación por su función institucional, sin nombrar a sus integrantes, en línea con la
+  decisión de privacidad ya registrada arriba sobre el Consejo Directivo.
+- **Logo monocromático:** se generó `assets/img/logo-approcap-white.png` a partir del
+  logo original, mediante un script de procesamiento de imagen
+  (`scripts/make-white-logo.ps1`) que recorta el fondo blanco a transparente y convierte
+  la silueta a blanco (con opacidad variable según la luminosidad original, para
+  conservar la legibilidad interna del ícono). Se usa solo en el header transparente de
+  Inicio; el logo a color original se mantiene sin cambios en el resto del sitio,
+  footer y favicon.
+
 ## Aspectos técnicos
 
 - **Dominio y hosting:** el sitio no tiene todavía dominio ni hosting asignado. Por eso
@@ -108,3 +139,11 @@ visitante: donde faltó un dato, simplemente se omitió esa sección o ese campo
   `assets/img/` a partir de los originales en `COOP.APPROCAP/`. Es específico de
   PowerShell/Windows y usa rutas absolutas de este equipo; se conserva como referencia
   por si se agregan más fotos en el futuro.
+- `scripts/make-white-logo.ps1` genera `assets/img/logo-approcap-white.png` (la versión
+  monocromática del logo para el header transparente) a partir del logo a color.
+- `scripts/cdp-check.ps1` y `scripts/contrast-check.ps1` son herramientas de
+  verificación (no se publican en el sitio): el primero abre el sitio en Chrome headless
+  vía el protocolo de depuración (CDP) para revisar overflow horizontal, errores de
+  consola, y probar interacciones reales (clics, teclado, scroll); el segundo calcula
+  contraste WCAG de los pares de color del sitio. Se usaron para verificar el sitio
+  antes de cada entrega y se conservan para volver a correr esas pruebas en el futuro.
