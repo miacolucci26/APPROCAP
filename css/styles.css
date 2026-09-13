@@ -26,8 +26,8 @@
   --color-surface-alt: #F5F7F3;
 
   /* Tipografía */
-  --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --font-body: "Plus Jakarta Sans", "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 
   /* Grid de 4px */
@@ -65,7 +65,8 @@ body {
   overflow-x: hidden;
 }
 img { max-width: 100%; display: block; }
-h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-primary); font-weight: 600; line-height: 1.15; margin: 0 0 var(--space-4); letter-spacing: -0.01em; }
+h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-primary); font-weight: 600; line-height: 1.15; margin: 0 0 var(--space-4); letter-spacing: -0.015em; }
+h1 strong, h2 strong, h3 strong { font-weight: 800; }
 h1 { font-size: clamp(2.25rem, 1.7rem + 2.4vw, 3.6rem); font-weight: 600; }
 h2 { font-size: clamp(1.7rem, 1.4rem + 1.3vw, 2.5rem); }
 h3 { font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.4rem); }
@@ -215,22 +216,53 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 /* ---------- Hero (imagen completa, home) ---------- */
 .hero-full {
   position: relative;
-  min-height: clamp(560px, 84vh, 780px);
-  display: flex; align-items: flex-end;
+  /* Sube el hero por debajo del header para que la foto llegue hasta el
+     borde superior real de la ventana, con el header flotando encima. */
+  margin-top: calc(-1 * var(--header-height));
+  min-height: clamp(620px, 96vh, 880px);
+  display: flex; align-items: center;
   overflow: hidden;
   isolation: isolate;
 }
 .hero-full-media { position: absolute; inset: 0; z-index: -1; }
-.hero-full-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 32%; }
+.hero-full-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
 .hero-full-media::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(4, 16, 10, 0.18) 0%, rgba(4, 16, 10, 0.58) 60%, rgba(4, 16, 10, 0.86) 100%);
+  /* Oscurece lo justo para que el texto blanco se lea, sin apagar la foto:
+     más presencia a la izquierda (donde vive el texto), casi transparente
+     a la derecha. */
+  background: linear-gradient(100deg, rgba(4, 16, 10, 0.62) 0%, rgba(4, 16, 10, 0.34) 42%, rgba(4, 16, 10, 0.1) 72%);
 }
-.hero-full-content { padding-block: var(--space-7) var(--space-9); }
-.hero-full-content .eyebrow { color: var(--color-secondary); text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35); }
+.hero-full-content { padding-block: calc(var(--header-height) + var(--space-7)) var(--space-9); }
+.hero-full-content .eyebrow { color: var(--color-secondary); text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45); }
 .hero-full-content .eyebrow::before { background: var(--color-accent); }
-.hero-full-content h1 { color: var(--color-white); text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4); }
-.hero-full-content .lede { color: rgba(255, 255, 255, 0.92); max-width: 62ch; text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4); }
+.hero-full-content h1 { color: var(--color-white); text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5); }
+.hero-full-content .lede { color: rgba(255, 255, 255, 0.94); max-width: 60ch; text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55); }
+
+/* Header transparente mientras flota sobre el hero; en cuanto se hace
+   scroll, JS quita este modificador y el header vuelve a su estilo sólido
+   de siempre (ver js/main.js). Sin JS, el header simplemente se muestra
+   sólido desde el inicio: sigue siendo legible. */
+.site-header--transparent { border-bottom-color: transparent; }
+.site-header--transparent::before { opacity: 0; }
+.site-header--transparent .brand-name { color: var(--color-white); }
+.site-header--transparent .brand-name small { color: rgba(255, 255, 255, 0.78); }
+.site-header--transparent .main-nav a { color: rgba(255, 255, 255, 0.92); }
+.site-header--transparent .main-nav a[aria-current="page"] { color: var(--color-white); }
+.site-header--transparent .main-nav a::after { background: var(--color-white); }
+.site-header--transparent .nav-toggle { border-color: rgba(255, 255, 255, 0.55); color: var(--color-white); }
+/* El panel móvil desplegado es opaco y blanco (ver .main-nav.is-open):
+   si el header sigue "transparente" cuando se abre, el texto debe volver
+   a ser oscuro para no perderse sobre ese fondo blanco. */
+.site-header--transparent .main-nav.is-open a { color: var(--color-text); }
+.site-header--transparent .main-nav.is-open a[aria-current="page"] { color: var(--color-primary); }
+.site-header--transparent .main-nav.is-open a::after { background: var(--color-accent); }
+.site-header--transparent .header-cta .btn-outline-dark { color: var(--color-white); border-color: rgba(255, 255, 255, 0.7); }
+.site-header--transparent .header-cta .btn-outline-dark:hover { background: rgba(255, 255, 255, 0.15); }
+.site-header::before,
+.brand-name, .brand-name small, .main-nav a, .nav-toggle, .header-cta .btn-outline-dark {
+  transition: color 200ms var(--ease), border-color 200ms var(--ease), opacity 200ms var(--ease), background-color 200ms var(--ease);
+}
 
 .page-hero {
   padding-block: var(--space-8) var(--space-7);
@@ -240,8 +272,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .page-hero .eyebrow::before { background: var(--color-blue); }
 
 @media (max-width: 900px) {
-  .hero-full { min-height: clamp(520px, 92vh, 680px); align-items: flex-end; }
-  .hero-full-content { padding-block: var(--space-6) var(--space-7); }
+  .hero-full { min-height: clamp(560px, 100vh, 760px); }
+  .hero-full-media::after {
+    background: linear-gradient(180deg, rgba(4, 16, 10, 0.35) 0%, rgba(4, 16, 10, 0.45) 55%, rgba(4, 16, 10, 0.72) 100%);
+  }
+  .hero-full-content { padding-block: calc(var(--header-height) + var(--space-6)) var(--space-7); }
 }
 
 /* ---------- Stat strip ---------- */

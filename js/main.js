@@ -6,6 +6,24 @@
     el.textContent = new Date().getFullYear();
   });
 
+  /* ---------------- Header transparente sobre el hero (solo Inicio) ---------------- */
+  var transparentHeader = document.querySelector(".site-header[data-transparent-hero]");
+  if (transparentHeader) {
+    var scrollThreshold = 40;
+    var ticking = false;
+    var syncHeaderState = function () {
+      transparentHeader.classList.toggle("site-header--transparent", window.scrollY <= scrollThreshold);
+      ticking = false;
+    };
+    syncHeaderState();
+    window.addEventListener("scroll", function () {
+      if (!ticking) {
+        window.requestAnimationFrame(syncHeaderState);
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
   /* ---------------- Menú móvil ---------------- */
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("main-nav");

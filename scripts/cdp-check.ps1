@@ -129,9 +129,10 @@ try {
     width = $Width; height = $Height; deviceScaleFactor = 1; mobile = [bool]$Mobile
   } | Out-Null
 
-  Send-CDP "Page.navigate" @{ url = "http://127.0.0.1:8000/$UrlPath" } | Out-Null
+  $targetUrl = if ($UrlPath -match '^https?://') { $UrlPath } else { "http://127.0.0.1:8000/$UrlPath" }
+  Send-CDP "Page.navigate" @{ url = $targetUrl } | Out-Null
   Wait-ForEvent "Page.loadEventFired" 15000 | Out-Null
-  Start-Sleep -Milliseconds 800  # let images/fonts settle
+  Start-Sleep -Milliseconds 1200  # let images/fonts/JS app settle
 
   if ($Click -and $ClickSelector -ne "") {
     $expr = "document.querySelector('$ClickSelector').click(); document.querySelector('$ClickSelector').getBoundingClientRect().toJSON ? 'clicked' : 'clicked'"
