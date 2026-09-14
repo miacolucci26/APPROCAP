@@ -98,6 +98,7 @@ button { font: inherit; }
 }
 .section { padding-block: var(--space-9); }
 .section--tint { background: var(--color-surface-alt); }
+.section--mint { background: linear-gradient(180deg, rgba(132, 220, 198, 0.18), rgba(132, 220, 198, 0.05)); }
 .section--primary { background: var(--color-primary); color: var(--color-white); }
 .section--primary h2, .section--primary h3 { color: var(--color-white); }
 .section--primary p { color: rgba(255,255,255,0.86); }
@@ -200,36 +201,17 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   background: var(--color-accent); transform: scaleX(0); transform-origin: left;
   transition: transform 180ms var(--ease);
 }
-.nav-link:hover::after, .nav-link[aria-current="page"]::after, .nav-item--dropdown.is-open .nav-link::after { transform: scaleX(1); }
+.nav-link:hover::after, .nav-link[aria-current="page"]::after { transform: scaleX(1); }
 .nav-link[aria-current="page"] { color: var(--color-primary); font-weight: 600; }
-.nav-chevron { width: 15px; height: 15px; transition: transform 180ms var(--ease); }
-.nav-item--dropdown.is-open .nav-chevron { transform: rotate(180deg); }
 
-/* Panel desplegable (escritorio: flotante bajo el disparador) */
-.nav-dropdown {
-  display: none;
-  background: var(--color-surface); border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-md); box-shadow: var(--shadow-card);
-  padding: var(--space-2);
-  min-width: 260px;
+/* Último enlace del menú: botón de llamada a la acción, no un link de texto */
+.nav-link--cta {
+  background: var(--color-accent); color: var(--color-ink) !important;
+  padding: 10px 20px; border-radius: 999px; font-weight: 700;
 }
-.nav-item--dropdown.is-open .nav-dropdown { display: block; }
-.nav-dropdown-link {
-  display: block; padding: var(--space-3) var(--space-3);
-  color: var(--color-text); text-decoration: none; font-size: 0.92rem; font-weight: 500;
-  border-radius: var(--radius-sm);
-}
-.nav-dropdown-link:hover { background: var(--color-primary-tint); color: var(--color-primary); }
-
-.header-cta { display: flex; align-items: center; gap: var(--space-4); }
-.header-cta .btn { padding: 10px 18px; }
-
-@media (min-width: 861px) {
-  .nav-dropdown {
-    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-    margin-top: var(--space-2); z-index: 10;
-  }
-}
+.nav-link--cta:hover { background: #F2DE00; }
+.nav-link--cta::after { display: none; }
+.nav-link--cta[aria-current="page"] { color: var(--color-ink); }
 
 @media (max-width: 860px) {
   .main-nav {
@@ -243,14 +225,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   .main-nav ul { flex-direction: column; gap: var(--space-2); }
   .nav-link { display: flex; width: 100%; justify-content: space-between; font-size: 1.15rem; padding-block: var(--space-3); border-bottom: 1px solid var(--color-border-subtle); }
   .nav-link::after { display: none; }
-  .nav-dropdown {
-    padding: 0 0 var(--space-2) var(--space-4); border: none; box-shadow: none; min-width: 0;
-  }
-  .nav-item--dropdown:not(.is-open) .nav-dropdown { display: none; }
-  .nav-item--dropdown.is-open .nav-dropdown { display: block; }
-  .nav-dropdown-link { padding-block: var(--space-2); font-size: 1rem; color: var(--color-text-muted); }
+  .nav-link--cta { justify-content: center; border-bottom: none; margin-top: var(--space-4); }
   .nav-toggle { display: inline-flex; }
-  .header-cta { display: none; }
 }
 .nav-toggle[aria-expanded="true"] .icon-menu { display: none; }
 .nav-toggle[aria-expanded="true"] .icon-close { display: block; }
@@ -293,18 +269,15 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .site-header--transparent .main-nav > ul > .nav-item > .nav-link[aria-current="page"] { color: var(--color-white); }
 .site-header--transparent .main-nav > ul > .nav-item > .nav-link::after { background: var(--color-white); }
 .site-header--transparent .nav-toggle { border-color: rgba(255, 255, 255, 0.55); color: var(--color-white); }
-/* El panel móvil desplegado, y cualquier panel de desplegable, son opacos
-   y blancos (ver .main-nav.is-open y .nav-dropdown): si el header sigue
-   "transparente" cuando se abren, el texto debe volver a ser oscuro para
+/* El panel móvil desplegado es opaco y blanco: si el header sigue
+   "transparente" cuando se abre, el texto debe volver a ser oscuro para
    no perderse sobre ese fondo blanco. */
 .site-header--transparent .main-nav.is-open > ul > .nav-item > .nav-link { color: var(--color-text); }
 .site-header--transparent .main-nav.is-open > ul > .nav-item > .nav-link[aria-current="page"] { color: var(--color-primary); }
 .site-header--transparent .main-nav.is-open > ul > .nav-item > .nav-link::after { background: var(--color-accent); }
-.site-header--transparent .nav-dropdown-link { color: var(--color-text); }
-.site-header--transparent .header-cta .btn-outline-dark { color: var(--color-white); border-color: rgba(255, 255, 255, 0.7); }
-.site-header--transparent .header-cta .btn-outline-dark:hover { background: rgba(255, 255, 255, 0.15); }
+.site-header--transparent .main-nav > ul > .nav-item > .nav-link--cta { color: var(--color-ink) !important; }
 .site-header::before,
-.brand-name, .brand-name small, .nav-link, .nav-toggle, .header-cta .btn-outline-dark {
+.brand-name, .brand-name small, .nav-link, .nav-toggle {
   transition: color 200ms var(--ease), border-color 200ms var(--ease), opacity 200ms var(--ease), background-color 200ms var(--ease);
 }
 
@@ -331,6 +304,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   padding-block: var(--space-8);
 }
 .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
+.stat-strip--2 { grid-template-columns: repeat(2, 1fr); max-width: 720px; margin-inline: auto; }
 .stat { padding: var(--space-5) 0; border-top: 2px solid var(--color-accent); }
 .stat .value {
   display: block; font-family: var(--font-display); font-variant-numeric: tabular-nums;
@@ -338,6 +312,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 }
 .stat .label { font-size: 0.92rem; color: rgba(255, 255, 255, 0.78); }
 @media (max-width: 760px) { .stat-strip { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .stat-strip--2 { grid-template-columns: 1fr; max-width: 320px; } }
 
 /* ---------- Editorial split rows ---------- */
 .split {
@@ -352,10 +327,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 
 /* ---------- Cards ---------- */
 .card-grid { display: grid; gap: var(--space-5); }
+.card-grid--2 { grid-template-columns: repeat(2, 1fr); }
 .card-grid--3 { grid-template-columns: repeat(3, 1fr); }
 .card-grid--4 { grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 900px) { .card-grid--3, .card-grid--4 { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .card-grid--3, .card-grid--4 { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .card-grid--2, .card-grid--3, .card-grid--4 { grid-template-columns: 1fr; } }
 
 .card {
   background: var(--color-surface); border: 1px solid var(--color-border-subtle);
@@ -364,6 +340,15 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .card .icon-badge { margin-bottom: var(--space-4); }
 .card h3 { margin-bottom: var(--space-2); font-size: 1.1rem; }
 .card p { margin-bottom: 0; font-size: 0.95rem; color: var(--color-text-muted); }
+
+/* Tarjetas de garantía (Sostenibilidad): más aire, borde superior de color por tema */
+.card--guarantee { padding: var(--space-6); border-top: 4px solid var(--color-border); }
+.card--guarantee.card--mint { border-top-color: var(--color-secondary); }
+.card--guarantee.card--blue { border-top-color: var(--color-blue); }
+.card--guarantee h3 { font-size: 1.3rem; margin-bottom: var(--space-3); }
+.card--guarantee p { font-size: 1rem; }
+.card--guarantee .icon-badge { width: 56px; height: 56px; }
+.card--guarantee .icon-badge svg { width: 28px; height: 28px; }
 
 .icon-badge {
   width: 44px; height: 44px; border-radius: var(--radius-sm);
@@ -447,6 +432,10 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .highlight-copy { padding: var(--space-7); }
 .highlight-copy .eyebrow { color: var(--color-secondary); }
 .highlight-copy .eyebrow::before { background: var(--color-accent); }
+.highlight-copy .big-stat {
+  display: block; font-family: var(--font-display); font-weight: 800; line-height: 1;
+  font-size: clamp(2.6rem, 2rem + 2.4vw, 4.2rem); color: var(--color-accent); margin-bottom: var(--space-2);
+}
 @media (max-width: 860px) {
   .highlight-banner { grid-template-columns: 1fr; }
   .highlight-copy { padding: var(--space-6) var(--space-5); }

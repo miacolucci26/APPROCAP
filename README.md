@@ -8,13 +8,15 @@ HTML, CSS y JavaScript estáticos, sin frameworks ni build step.
 ## Estructura
 
 ```
-index.html        Inicio (hero de imagen completa, cifras animadas)
-nosotros.html      El Origen (215 ha, cacao blanco y criollo, pisos ecológicos,
-                    misión/visión, gobernanza, reconocimientos)
-productos.html      Productos (cacao en grano, proceso, línea INTENSSO)
-compromiso.html      Impacto y Clima (agricultura orgánica, resiliencia
-                    climática, equidad e inclusión, objetivos 2023-2027)
-contacto.html        Contacto
+index.html          Inicio (hero de imagen completa, cifras animadas)
+nosotros.html       Nosotros (misión/visión, equidad de género, gobernanza,
+                    reconocimientos)
+nuestro-cacao.html  Nuestro Cacao (genética premium, 215 ha, cacao blanco y
+                    criollo, variedades por piso ecológico)
+sostenibilidad.html Sostenibilidad (certificación orgánica, resiliencia
+                    climática, objetivos 2023-2027)
+intensso.html       Marca INTENSSO (cacao en grano, proceso, línea de derivados)
+contacto.html       Contacto
 
 css/styles.css     Estilos (variables de marca, componentes, responsive)
 js/main.js         Menú móvil, desplegables de navegación, cifras animadas,
@@ -38,11 +40,10 @@ PENDIENTES.md       Información no publicada por falta de verificación,
                      y decisiones sobre datos personales
 ```
 
-La navegación principal usa menús desplegables: **El Origen** (215 hectáreas, cacao
-blanco y criollo, variedades por piso ecológico), **Impacto y Clima** (agricultura
-orgánica, resiliencia climática, equidad e inclusión), además de enlaces directos a
-**INTENSSO** y **Gobernanza**. Las páginas `galeria.html` y `trabajo.html` de la
-primera versión ya no existen: su contenido se fusionó dentro de `productos.html`
+La navegación principal es plana, con cinco enlaces directos: **Nosotros**,
+**Nuestro Cacao**, **Sostenibilidad**, **Marca INTENSSO** y **Contáctanos** (este
+último con estilo de botón). Las páginas `galeria.html` y `trabajo.html` de la
+primera versión ya no existen: su contenido se fusionó dentro de `intensso.html`
 (proceso de trabajo) o se retiró (galería). Ver `PENDIENTES.md` para el detalle.
 
 La carpeta `COOP.APPROCAP/` contiene los materiales originales (Plan Estratégico
